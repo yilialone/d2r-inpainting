@@ -11,8 +11,7 @@ type: software
 license: Apache-2.0
 version: 1.0.0
 date-released: 2026-09-21
-# Replace OWNER with your GitHub account or organisation before publishing.
-repository-code: "https://github.com/OWNER/d2r-inpainting"
+repository-code: "https://github.com/yilialone/d2r-inpainting"
 keywords:
   - image inpainting
   - diffusion models

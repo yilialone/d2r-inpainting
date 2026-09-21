@@ -18,6 +18,9 @@ accelerate==1.11.0
 # --- diffusion, LoRA, text encoding ---
 diffusers==0.30.2
 peft==0.17.1
+# transformers is not imported directly anywhere in this repository; it is pinned
+# because diffusers/peft use it for the text encoder, and its version affects
+# tokenisation and the CLIP text embeddings the UNet is conditioned on.
 transformers==4.57.6
 safetensors==0.8.0
 
@@ -29,6 +32,11 @@ scipy==1.12.0
 
 # --- imaging and I/O ---
 Pillow==10.4.0
+# OpenCV is not only I/O: models/generator.py builds the 12-channel texture
+# descriptor (Canny / Sobel / Laplacian / Gabor) with cv2, so its version can
+# shift training inputs. The reference environment installed 4.10.0 through
+# conda; 4.10.0.84 is the equivalent pip release (conda drops the package
+# revision suffix) and is what `pip install -r requirements.txt` will fetch.
 opencv-python==4.10.0.84
 
 # --- utilities ---

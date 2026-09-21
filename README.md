@@ -6,7 +6,7 @@
 **Stage 2:** texture-aware GAN residual refinement ·
 **Control:** matched end-to-end single-stage U-Net
 
-[![tests](https://github.com/OWNER/d2r-inpainting/actions/workflows/tests.yml/badge.svg)](https://github.com/OWNER/d2r-inpainting/actions/workflows/tests.yml)
+[![tests](https://github.com/yilialone/d2r-inpainting/actions/workflows/tests.yml/badge.svg)](https://github.com/yilialone/d2r-inpainting/actions/workflows/tests.yml)
 [![license: Apache-2.0](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](LICENSE)
 [![data: CC0-1.0](https://img.shields.io/badge/data-CC0--1.0-lightgrey.svg)](data/public_subset/LICENSE)
 [![python](https://img.shields.io/badge/python-3.11%20%7C%203.12-blue.svg)](requirements.txt)
@@ -14,9 +14,6 @@
 </div>
 
 ---
-
-> **Replace `OWNER` in the badge URLs above and in [`CITATION.cff`](CITATION.cff)
-> before publishing.**
 
 ## What this repository is
 
@@ -156,7 +153,7 @@ is the single deliberate exception.
 ## Installation
 
 ```bash
-git clone https://github.com/OWNER/d2r-inpainting.git
+git clone https://github.com/yilialone/d2r-inpainting.git
 cd d2r-inpainting
 
 # Install the PyTorch build matching your CUDA driver first, then the rest:
@@ -385,7 +382,7 @@ If you use this software, please cite it as below. GitHub can generate the refer
   year      = {2026},
   version   = {1.0.0},
   license   = {Apache-2.0},
-  url       = {https://github.com/OWNER/d2r-inpainting}
+  url       = {https://github.com/yilialone/d2r-inpainting}
 }
 ```
 
