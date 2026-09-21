@@ -5,6 +5,7 @@
 *.md    text eol=lf
 *.txt   text eol=lf
 *.csv   text eol=lf
+*.cff   text eol=lf
 *.json  text eol=lf
 *.yml   text eol=lf
 *.yaml  text eol=lf
@@ -13,6 +14,8 @@
 *.sh    text eol=lf
 *.bat   text eol=crlf
 *.ps1   text eol=crlf
+LICENSE       text eol=lf
+NOTICE        text eol=lf
 .gitignore    text eol=lf
 .gitattributes text eol=lf
 

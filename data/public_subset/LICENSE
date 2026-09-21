@@ -25,11 +25,8 @@ accordance with the museum's Image Services policy:
 
 ## 4. Author field photographs — not currently included
 
-Ten field photographs are **not** part of this release. The source table records them as
-taken by recording-institution staff, with copyright held by the recording institution
-and redistribution permitted only if that institution has granted rights. Because the
-rights position is not documented as settled, no licence is asserted over them here and
-they are withheld from redistribution.
+Ten field photographs are **not** part of this release, because their rights status is
+not yet settled. No licence is asserted over them here.
 
 If they are added later, this file must be updated to state their actual rights basis and
 the corresponding licence section, and the statements in `README.md`, `CREDITS.md`,

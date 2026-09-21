@@ -1,0 +1,81 @@
+name: tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  # --------------------------------------------------------------------- #
+  # Fast job: no deep-learning dependencies. Guards the release boundary
+  # (no weights, no corpus images) and the image-metadata safety net.
+  # --------------------------------------------------------------------- #
+  hygiene:
+    name: Repo hygiene & image metadata
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install minimal dependencies
+        run: python -m pip install --upgrade pip pillow numpy
+
+      - name: Syntax check every module
+        run: |
+          python -m compileall -q \
+            dataset models training metrics inference utils \
+            train.py infer.py evaluate.py test_paper_params.py scripts tools
+
+      - name: Repository content guard (no weights, no corpus images)
+        run: python tools/check_repo_hygiene.py
+
+      - name: Audit released images for EXIF/GPS
+        run: python tools/check_image_metadata.py --dir data/public_subset
+
+      - name: GPS stripping is lossless (synthetic fixture)
+        run: python tools/test_check_image_metadata.py
+
+  # --------------------------------------------------------------------- #
+  # Full job: installs the pinned environment and runs the protocol suite.
+  # No GPU, no model weights and no dataset are required.
+  # --------------------------------------------------------------------- #
+  tests:
+    name: Protocol & parameter tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: System libraries required by OpenCV
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends libgl1 libglib2.0-0
+
+      - name: Install PyTorch (CPU wheels — the CUDA build is ~2.5 GB and unnecessary here)
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install torch==2.9.0 torchvision==0.24.0 \
+            --index-url https://download.pytorch.org/whl/cpu
+
+      - name: Install remaining requirements
+        run: python -m pip install -r requirements.txt
+
+      - name: Paper defaults are intact and opt-in flags are off
+        run: python tools/check_protocol.py
+
+      - name: Protocol, model and loss test suite
+        run: python test_paper_params.py --quick

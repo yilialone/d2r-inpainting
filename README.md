@@ -6,9 +6,17 @@
 **Stage 2:** texture-aware GAN residual refinement ·
 **Control:** matched end-to-end single-stage U-Net
 
+[![tests](https://github.com/OWNER/d2r-inpainting/actions/workflows/tests.yml/badge.svg)](https://github.com/OWNER/d2r-inpainting/actions/workflows/tests.yml)
+[![license: Apache-2.0](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](LICENSE)
+[![data: CC0-1.0](https://img.shields.io/badge/data-CC0--1.0-lightgrey.svg)](data/public_subset/LICENSE)
+[![python](https://img.shields.io/badge/python-3.11%20%7C%203.12-blue.svg)](requirements.txt)
+
 </div>
 
 ---
+
+> **Replace `OWNER` in the badge URLs above and in [`CITATION.cff`](CITATION.cff)
+> before publishing.**
 
 ## What this repository is
 
@@ -16,14 +24,18 @@ A leakage-free reference implementation of a two-stage image restoration pipelin
 ("D2R") for damaged bronze-mirror photographs, plus the matched single-stage control
 requested during peer review. It is the code accompanying the revised manuscript.
 
-The repository contains **code only**. Model weights, checkpoints, datasets and
-generated results are deliberately excluded — see [`Data layout`](#data-layout) and
-[`.gitignore`](.gitignore).
+The repository is **code plus one small, licence-clear image subset**. Model weights,
+checkpoints, the study corpus and generated results are deliberately excluded — see
+[Data availability](#data-availability) and [`.gitignore`](.gitignore).
 
-> **Status.** This is a maintained research codebase, not a released artifact. The
-> numbers in [`docs/RESULTS.md`](docs/RESULTS.md) come from a **single seed (2026)**
-> on one internal 51-pair test set and are reported for engineering comparison only.
-> They are not the final manuscript table.
+> **Status.** Research code accompanying a manuscript under revision. The numbers in
+> [`docs/RESULTS.md`](docs/RESULTS.md) come from a **single seed (2026)** on one internal
+> 51-pair test set and are reported for engineering comparison only. They are not the
+> final manuscript table, and nothing here should be cited as a published result.
+
+**New here?** Read the [protocol invariants](#why-the-input-protocol-is-the-interesting-part)
+below, then [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) for how the modules fit
+together.
 
 ---
 
@@ -54,6 +66,8 @@ See [`docs/PROTOCOL.md`](docs/PROTOCOL.md) for the full specification.
 ├── evaluate.py                  # multi-method benchmark on a fixed manifest
 ├── test_paper_params.py         # protocol & default-value test suite (sections A–F)
 ├── requirements.txt
+├── LICENSE  NOTICE              # Apache-2.0 (code) + third-party attributions
+├── CITATION.cff                 # "Cite this repository" metadata
 ├── dataset/dataset.py           # synchronized geometric + optional photometric augmentation
 ├── training/
 │   ├── common.py                # shared losses, metrics, parameter & budget accounting
@@ -70,9 +84,13 @@ See [`docs/PROTOCOL.md`](docs/PROTOCOL.md) for the full specification.
 │   └── public_subset/           # 14 museum CC0 images + provenance (see Data availability)
 ├── tools/
 │   ├── check_protocol.py        # asserts the paper defaults are intact
-│   └── check_image_metadata.py  # EXIF/GPS audit; lossless GPS stripping
+│   ├── check_image_metadata.py  # EXIF/GPS audit; lossless GPS stripping
+│   ├── test_check_image_metadata.py
+│   └── check_repo_hygiene.py    # no weights / corpus images / split manifests
 ├── eval/manifest_template.csv   # evaluation-manifest format example (placeholders only)
+├── .github/workflows/tests.yml  # CI: hygiene + protocol suite (CPU only)
 └── docs/
+    ├── ARCHITECTURE.md          # how the modules and stages fit together
     ├── PROTOCOL.md              # input/leakage invariants
     └── RESULTS.md               # measured numbers + exact reproduction commands
 ```
@@ -108,10 +126,10 @@ Three things to note about it:
   Image metadata is an easily overlooked disclosure channel; precise coordinates of
   archaeological sites are sensitive. [`tools/check_image_metadata.py`](tools/check_image_metadata.py)
   audits a directory for GPS and other EXIF tags and can strip GPS losslessly.
-* **Ten author field photographs are withheld.** Their rights position is not documented
-  as settled, so no licence is asserted over them. The reasoning is recorded in
-  `data/public_subset/README.md` and `LICENSE`; if they are added later, the README,
-  LICENSE, CREDITS, SOURCES and CITATION files must be updated together and consistently.
+* **Ten author field photographs are not currently included**, because their rights
+  status is not yet settled; no licence is asserted over them. They can be added once it
+  is documented, at which point `data/public_subset/README.md`, `LICENSE`, `CREDITS.md`,
+  `SOURCES.csv` and `CITATION.cff` must be updated together and consistently.
 
 The data licence is **separate from the software licence** — `data/public_subset/LICENSE`
 covers the images only.
@@ -124,7 +142,7 @@ is the single deliberate exception.
 ## Installation
 
 ```bash
-git clone <your-repo-url> d2r-inpainting
+git clone https://github.com/OWNER/d2r-inpainting.git
 cd d2r-inpainting
 
 # Install the PyTorch build matching your CUDA driver first, then the rest:
@@ -241,17 +259,22 @@ control without loading Stable Diffusion at all.
 ## Tests
 
 ```bash
-python -m compileall -q dataset models training metrics inference utils train.py infer.py scripts tools
+python -m compileall -q dataset models training metrics inference utils train.py infer.py evaluate.py test_paper_params.py scripts tools
 python test_paper_params.py --quick     # protocol + defaults, no data or weights needed
 python tools/check_protocol.py          # opt-in defaults are intact
 python tools/test_check_image_metadata.py   # GPS stripping is lossless (synthetic fixture)
 python tools/check_image_metadata.py --dir data/public_subset   # audit the released images
+python tools/check_repo_hygiene.py      # no weights, corpus images or split manifests
 ```
 
 `test_paper_params.py` covers parameter defaults, model forward shapes, loss and
 mask-fidelity properties, a real one-step G/D update, the single-stage control and the
 budget-report parser. Section E (end-to-end inference) skips itself when
 `D2R_SD_MODEL` and the test images are unavailable.
+
+Every command above runs on CPU without model weights or datasets, so this is what
+[`.github/workflows/tests.yml`](.github/workflows/tests.yml) runs on each push and pull
+request — split into a light "hygiene" job and a full "protocol" job.
 
 ---
 
@@ -286,20 +309,39 @@ Reported runs were produced on a single **RTX 4060 Laptop, 8 GB**.
 
 ## Citation
 
+If you use this software, please cite it as below. GitHub can generate the reference from
+[`CITATION.cff`](CITATION.cff) ("Cite this repository" in the sidebar).
+
 ```bibtex
-@article{d2r-bronze-mirror,
-  title   = {Two-stage diffusion and GAN refinement for the restoration of
-             damaged bronze mirror photographs},
-  journal = {npj Heritage Science},
-  note    = {Manuscript under revision},
-  year    = {2025}
+@software{d2r_bronze_mirror,
+  title     = {D2R: Two-Stage Diffusion and GAN Refinement for Heritage Image Inpainting},
+  author    = {Guan, Jun and Jia, Qian and Zhang, Jianmin and Li, Yang},
+  year      = {2026},
+  version   = {1.0.0},
+  license   = {Apache-2.0},
+  url       = {https://github.com/OWNER/d2r-inpainting}
 }
 ```
 
+The released images are a separate work with their own citation — see
+[`data/public_subset/CITATION.cff`](data/public_subset/CITATION.cff). Both accompany:
+
+> "Two-Stage Structural Reconstruction and Texture Refinement for Digital Restoration of
+> Ancient Chinese Mountain-Pattern Bronze Mirror Photographs", *npj Heritage Science*,
+> manuscript ID `a062e16c-271f-4765-88b0-c2ef3985d848` (under revision).
+
 ## License
 
-**Not yet specified.** Add a `LICENSE` file before publishing — without one, the code is
-"all rights reserved" by default, which prevents reuse. For research code of this kind,
-Apache-2.0 or MIT are the usual choices; note that the code depends on
-`runwayml/stable-diffusion-inpainting` (CreativeML Open RAIL-M) and on LPIPS, whose
-terms differ from the license you pick here.
+**Code: [Apache License 2.0](LICENSE).** Copyright 2026 Guan Jun, Jia Qian, Zhang
+Jianmin, Li Yang. See [`NOTICE`](NOTICE) for third-party components.
+
+**Images: [CC0 1.0 Universal](data/public_subset/LICENSE)** — the two are separate works
+under separate licences, and the Apache licence does not extend to the image subset.
+
+Two dependency caveats worth knowing before you redistribute anything derived from this
+code:
+
+* `runwayml/stable-diffusion-inpainting` is distributed under the **CreativeML Open
+  RAIL-M** licence, which carries use restrictions that Apache-2.0 does not. The weights
+  are not bundled here, but checkpoints you train are derived from them.
+* LPIPS and the other third-party packages have their own terms; see [`NOTICE`](NOTICE).

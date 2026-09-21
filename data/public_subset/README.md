@@ -33,17 +33,12 @@ damage masks used in the article are derived annotations and are not redistribut
 
 ## What is deliberately excluded
 
-### 1. Author field photographs (held back)
+### 1. Author field photographs (not currently included)
 
 Ten photographs taken at excavation sites and in stores are **not included at this
-time**. The subset's source table records them as taken by recording-institution staff
-with copyright held by that institution and redistribution permitted only if the
-institution has granted rights, whereas earlier drafts of the credit and licence files
-attributed them to the authors and offered them under CC BY 4.0. Those two statements
-cannot both be true, and a licence cannot be granted over material whose ownership is
-unsettled. These images will be added only once the rights position is documented, at
-which point `README.md`, `LICENSE`, `CREDITS.md`, `SOURCES.csv` and `CITATION.cff` in
-this directory must be updated together and consistently.
+time**, because their rights status is not yet settled. They will be added once it is,
+at which point `README.md`, `LICENSE`, `CREDITS.md`, `SOURCES.csv` and `CITATION.cff`
+in this directory must be updated together and consistently.
 
 ### 2. Photographs taken by the authors inside museum galleries
 

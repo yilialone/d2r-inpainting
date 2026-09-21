@@ -1,15 +1,36 @@
+# Environment used for the reported runs (Python 3.12, CUDA 12.6, RTX 4060 Laptop 8 GB).
+#
+# Install the PyTorch build matching your own CUDA driver first, e.g.:
+#     pip install torch==2.9.0 torchvision==0.24.0 --index-url https://download.pytorch.org/whl/cu126
+#     pip install torch==2.9.0 torchvision==0.24.0 --index-url https://download.pytorch.org/whl/cpu   # CPU only
+# then:
+#     pip install -r requirements.txt
+#
+# On Linux, `opencv-python` needs the system OpenGL libraries:
+#     sudo apt-get install -y libgl1 libglib2.0-0
+# Use `opencv-python-headless` instead if you have no display stack.
+
+# --- deep learning core (install torch/torchvision first, see above) ---
 torch==2.9.0
 torchvision==0.24.0
-diffusers==0.30.2
 accelerate==1.11.0
+
+# --- diffusion, LoRA, text encoding ---
+diffusers==0.30.2
 peft==0.17.1
 transformers==4.57.6
-Pillow==10.4.0
-numpy==1.26.4
-scipy==1.12.0
-opencv-python==4.10.0.84
-tqdm==4.66.5
+safetensors==0.8.0
+
+# --- metrics and numerics ---
 lpips==0.1.4
 torchmetrics==1.5.2
-openpyxl==3.1.5
-safetensors==0.8.0
+numpy==1.26.4
+scipy==1.12.0
+
+# --- imaging and I/O ---
+Pillow==10.4.0
+opencv-python==4.10.0.84
+
+# --- utilities ---
+tqdm==4.66.5
+openpyxl==3.1.5          # only used by scripts/control_budget_report.py

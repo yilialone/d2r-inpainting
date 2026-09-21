@@ -1,0 +1,37 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below. If you use the released images, cite the dataset as well (see data/public_subset/CITATION.cff)."
+title: "D2R: Two-Stage Diffusion and GAN Refinement for Heritage Image Inpainting"
+abstract: >-
+  Reference implementation of a two-stage image restoration pipeline: LoRA
+  fine-tuning of Stable Diffusion Inpainting (Stage 1), followed by texture-aware
+  GAN residual refinement (Stage 2), with a matched end-to-end single-stage U-Net
+  control. Includes the leakage-free input protocol, the evaluation harness and
+  the budget/parameter accounting used in the accompanying manuscript.
+type: software
+license: Apache-2.0
+version: 1.0.0
+date-released: 2026-09-21
+# Replace OWNER with your GitHub account or organisation before publishing.
+repository-code: "https://github.com/OWNER/d2r-inpainting"
+keywords:
+  - image inpainting
+  - diffusion models
+  - LoRA
+  - generative adversarial network
+  - cultural heritage
+  - bronze mirrors
+authors:
+  - family-names: Guan
+    given-names: Jun
+  - family-names: Jia
+    given-names: Qian
+  - family-names: Zhang
+    given-names: Jianmin
+  - family-names: Li
+    given-names: Yang
+notes: >-
+  Accompanying manuscript: "Two-Stage Structural Reconstruction and Texture
+  Refinement for Digital Restoration of Ancient Chinese Mountain-Pattern Bronze
+  Mirror Photographs", npj Heritage Science, manuscript ID
+  a062e16c-271f-4765-88b0-c2ef3985d848. The released image subset is licensed
+  separately under CC0 1.0 Universal and is not covered by the software licence.
