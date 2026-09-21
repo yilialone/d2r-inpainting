@@ -51,6 +51,7 @@ byte-for-byte.
 | `models/discriminator.py` | `SimpleUNetDiscriminator`: per-pixel raw logits, no output sigmoid. |
 | `models/single_stage.py` | `SingleStageInpaintingGenerator`: tanh head, backbone layer-for-layer isomorphic to the Stage-2 generator apart from the first conv and the head. |
 | `inference/pipeline.py` | Loading and running the pipelines; `stage1_inference`, `refine_with_stage2`, `single_stage_inference`, batch metrics. |
+| `inference/restore.py` | **High-level, reusable entry point.** `D2RRestorer` loads the models once and can be called repeatedly (batching, context manager, injectable components); `restore_image` is the one-shot helper. This is the layer to use from a script or notebook. |
 | `inference/guidance.py` | Canny extraction, adaptive CFG, multi-CFG TTA, DPM-Solver++ helper. |
 | `metrics/calculator.py` | PSNR / SSIM / LPIPS / FID / KID with explicit full-image and mask-region semantics. |
 | `utils/image.py` | Resizing, mask overlays, comparison sheets, pair discovery. |

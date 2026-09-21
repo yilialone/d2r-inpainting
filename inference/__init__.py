@@ -1,3 +1,9 @@
+"""推理包。
+
+低层零件在 :mod:`inference.pipeline` 与 :mod:`inference.guidance`；需要反复调用的
+高层入口是 :class:`inference.restore.D2RRestorer` 与 :func:`inference.restore.restore_image`。
+"""
+
 from .pipeline import (
     load_model,
     load_stage2_generator,
@@ -13,8 +19,14 @@ from .guidance import (
     stage1_tta_inference,
     setup_dpm_scheduler,
 )
+from .restore import D2RRestorer, restore_image, MODES
 
 __all__ = [
+    # 高层入口
+    "D2RRestorer",
+    "restore_image",
+    "MODES",
+    # 低层零件
     "load_model",
     "load_stage2_generator",
     "load_single_stage_generator",

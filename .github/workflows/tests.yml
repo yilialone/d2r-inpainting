@@ -33,7 +33,8 @@ jobs:
         run: |
           python -m compileall -q \
             dataset models training metrics inference utils \
-            train.py infer.py evaluate.py test_paper_params.py scripts tools
+            train.py infer.py evaluate.py test_paper_params.py test_inference_api.py \
+            scripts tools
 
       - name: Repository content guard (no weights, no corpus images)
         run: python tools/check_repo_hygiene.py
@@ -79,3 +80,6 @@ jobs:
 
       - name: Protocol, model and loss test suite
         run: python test_paper_params.py --quick
+
+      - name: High-level inference API (injected stubs, no weights)
+        run: python test_inference_api.py

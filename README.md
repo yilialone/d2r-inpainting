@@ -75,6 +75,7 @@ See [`docs/PROTOCOL.md`](docs/PROTOCOL.md) for the full specification.
 ├── infer.py                     # single-image & batch inference CLI
 ├── evaluate.py                  # multi-method benchmark on a fixed manifest
 ├── test_paper_params.py         # protocol & default-value test suite (sections A–F)
+├── test_inference_api.py        # high-level inference API, with injected stubs
 ├── requirements.txt
 ├── LICENSE  NOTICE              # Apache-2.0 (code) + third-party attributions
 ├── CITATION.cff                 # "Cite this repository" metadata
@@ -86,6 +87,8 @@ See [`docs/PROTOCOL.md`](docs/PROTOCOL.md) for the full specification.
 │   └── single_stage.py          # matched end-to-end control
 ├── models/                      # generator (12-ch texture descriptor + TAG), discriminator
 ├── inference/                   # pipelines and guidance utilities
+│   ├── pipeline.py              # load / stage1_inference / refine_with_stage2
+│   └── restore.py               # D2RRestorer + restore_image (high-level API)
 ├── metrics/                     # PSNR / SSIM / LPIPS / FID / KID with explicit mask semantics
 ├── utils/
 ├── scripts/                     # manifest builder, server check, budget report, uncertainty
@@ -267,11 +270,60 @@ control without loading Stable Diffusion at all.
 
 ---
 
+## Programmatic inference
+
+`infer.py` is a command-line tool. To call the pipeline from a script or notebook, use
+`inference.restore` — it loads the models **once** and can then be called repeatedly,
+whereas the lower-level helpers in `inference/pipeline.py` require you to assemble every
+step yourself.
+
+```python
+from inference import D2RRestorer
+
+with D2RRestorer(
+    stage1_checkpoint="stage1_results/checkpoint-best",   # PEFT LoRA adapter
+    stage2_checkpoint="stage2_results/checkpoint-best",   # generator.pth
+    device="cuda",
+    num_steps=30, guidance_scale=7.5, seed=42,            # the protocol of record
+) as restorer:
+    restored = restorer.restore("photo.jpg", "mask.png")  # paths or PIL.Image
+    restored.save("restored.png")
+
+    batch = restorer.restore_batch(images, masks)         # seeds are base_seed + i
+```
+
+Only one stage, or the control:
+
+```python
+D2RRestorer(stage1_checkpoint="stage1_results/checkpoint-best")            # stage 1 only
+D2RRestorer(single_stage_checkpoint="single_stage_results/checkpoint-best")  # no SD loaded
+D2RRestorer()                                                             # un-finetuned base
+```
+
+Notes on behaviour:
+
+* **Inputs are resized to `size` (default 512)** — image with Lanczos, mask with nearest
+  neighbour. Pass `size=None` to supply 512×512 yourself.
+* **Outside the mask the output equals the input byte-for-byte**, re-composited in uint8.
+  Where the input was resized, the guarantee applies to the resized input.
+* **The mask is white-on-black** (values > 127 mark the region to restore).
+* `dtype` defaults to `torch.float32` to match the evaluation protocol in
+  [`docs/RESULTS.md`](docs/RESULTS.md); pass `torch.float16` for speed at a small
+  numerical cost.
+* `restore_image(...)` is the one-shot equivalent for when you only need a single call —
+  it loads and releases the models each time.
+
+See [`inference/restore.py`](inference/restore.py) for the full parameter list and
+`test_inference_api.py` for executable examples.
+
+---
+
 ## Tests
 
 ```bash
-python -m compileall -q dataset models training metrics inference utils train.py infer.py evaluate.py test_paper_params.py scripts tools
+python -m compileall -q dataset models training metrics inference utils train.py infer.py evaluate.py test_paper_params.py test_inference_api.py scripts tools
 python test_paper_params.py --quick     # protocol + defaults, no data or weights needed
+python test_inference_api.py            # inference API contract, with injected stubs
 python tools/check_protocol.py          # opt-in defaults are intact
 python tools/test_check_image_metadata.py   # GPS stripping is lossless (synthetic fixture)
 python tools/check_image_metadata.py --dir data/public_subset   # audit the released images
@@ -280,8 +332,11 @@ python tools/check_repo_hygiene.py      # no weights, corpus images or split man
 
 `test_paper_params.py` covers parameter defaults, model forward shapes, loss and
 mask-fidelity properties, a real one-step G/D update, the single-stage control and the
-budget-report parser. Section E (end-to-end inference) skips itself when
-`D2R_SD_MODEL` and the test images are unavailable.
+budget-report parser. `test_inference_api.py` covers the high-level inference entry
+point: mode resolution, input normalisation, the 4-channel Stage-2 contract, outside-mask
+byte-exactness, seed semantics and batching — all with injected stubs, so no weights are
+needed. Section E of `test_paper_params.py` skips itself when `D2R_SD_MODEL` and the test
+images are unavailable.
 
 Every command above runs on CPU without model weights or datasets, so this is what
 [`.github/workflows/tests.yml`](.github/workflows/tests.yml) runs on each push and pull

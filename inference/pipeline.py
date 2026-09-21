@@ -116,16 +116,25 @@ def _restore_outside_mask(restored_np: np.ndarray, original_image, mask, mask_te
 
 
 def load_model(base_model_path, lora_path=None, stage1_checkpoint=None,
-               stage2_checkpoint=None, device="cuda", use_cpu_offload=False):
+               stage2_checkpoint=None, device="cuda", use_cpu_offload=False,
+               dtype=None):
     """加载完整模型管线。
+
+    Args:
+        dtype: 计算精度。``None``（默认）沿用历史行为：CUDA 上用 fp16，否则 fp32。
+            评测脚本（``evaluate.py``）全程使用 fp32，因此若要复现论文数值请显式传
+            ``torch.float32``——fp16 会带来细微差异。
 
     返回: (pipe, generator)
       - pipe:   StableDiffusionInpaintPipeline（可能已注入 LoRA）
       - generator: Stage2 GAN 生成器，未加载时返回 None
     """
+    if dtype is None:
+        dtype = torch.float16 if device == "cuda" else torch.float32
+
     pipe = StableDiffusionInpaintPipeline.from_pretrained(
         base_model_path,
-        torch_dtype=torch.float16 if device == "cuda" else torch.float32,
+        torch_dtype=dtype,
         low_cpu_mem_usage=True,
         safety_checker=None,
         requires_safety_checker=False,
@@ -158,7 +167,16 @@ def load_model(base_model_path, lora_path=None, stage1_checkpoint=None,
             pipe.fuse_lora()  # 熔合 LoRA → 基座模型，推理更快更稳定
             print("LoRA 加载并熔合成功")
         except Exception as e1:
-            print(f"load_lora_weights 失败: {e1}")
+            # 注意：本仓库 Stage-1 保存的是 PEFT 格式适配器（key 带 "base_model.model."
+            # 前缀），diffusers 的 load_lora_weights 对它一律失败，正常情况下真正生效的
+            # 是下面的"前缀修复"分支。
+            # 该异常文本会列出全部未匹配的 target modules，长度可达数千字符，直接打印
+            # 会淹没日志，因此截断——只保留判断所需的信息。
+            msg = str(e1)
+            if len(msg) > 300:
+                msg = f"{msg[:300]} …（原信息共 {len(msg)} 字符，已截断）"
+            print(f"load_lora_weights 失败: {msg}")
+            print("（PEFT 格式适配器属预期情况，改用前缀修复路径重新加载）")
             # 尝试修复 state_dict 前缀 (base_model.model. → 去掉)
             try:
                 import safetensors.torch

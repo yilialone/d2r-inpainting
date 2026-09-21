@@ -7,8 +7,9 @@
 >
 > This repository is unfinished and under maintenance; the known defects and rough edges
 > behind several of these numbers are listed in [`STATUS.md`](STATUS.md) — in particular
-> the non-converging discriminator (§8) and the Stage-2 budget-report string that
-> misdescribes its own architecture.
+> the non-converging discriminator (§8 below). The Stage-2 budget-report string that used
+> to misdescribe its own architecture has since been fixed, but reports written before
+> the fix are not retroactively corrected.
 
 ---
 

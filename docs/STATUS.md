@@ -13,15 +13,16 @@ judge what they are relying on, not as a promise of when each will be addressed.
 
 ### Correctness and provenance
 
-* **The Stage-2 budget report misdescribes its own model.** `training/stage2.py` writes
-  `model_definition` as `"7 input channels [Stage-1 output, masked original, mask]"`,
-  while the same file's `PROTOCOL_ID` is
-  `d2r-stage2-paper-v4-4ch-I_S1-M-...` and `_refine()` passes 4 channels
-  (`[I_S1, M]`). The Stage-1 equivalent was made dynamic; the Stage-2 string was not.
-  This matters because `scripts/control_budget_report.py` copies the string straight
-  into the Table-4 output, so a report generated without editing it will describe an
-  architecture the code does not implement. **Check this string before quoting any
-  `budget_report.json` in a manuscript.**
+* **Budget reports written before this version misdescribe the Stage-2 model.**
+  `training/stage2.py` used to hard-code `model_definition` as `"7 input channels
+  [Stage-1 output, masked original, mask]"`, while the same file's `PROTOCOL_ID` was
+  already `d2r-stage2-paper-v4-4ch-I_S1-M-...` and `_refine()` passed 4 channels
+  (`[I_S1, M]`). `scripts/control_budget_report.py` copies that string straight into the
+  Table-4 output. The field is now produced by
+  `SimpleUNetGeneratorWithTexture.architecture_summary`, which derives the channel count
+  from the instance, so it can no longer drift. **Reports generated before the fix are
+  not retroactively corrected — regenerate them, or edit the string by hand, before
+  quoting one in a manuscript.**
 * **The discriminator did not converge** in the reported Stage-2 run: the hinge loss
   stayed pinned at its 2.0 floor for every epoch, i.e. it produced near-constant logits.
   Any claim that depends on adversarial texture refinement needs re-examination.
@@ -46,6 +47,16 @@ judge what they are relying on, not as a promise of when each will be addressed.
   default of `4` will fail in those environments.
 * There is no container image and no pinned lockfile, so a fresh install can drift from
   the pinned versions in `requirements.txt` if a transitive dependency changes.
+* **The diffusers-native LoRA path never succeeds for these adapters.**
+  `pipe.load_lora_weights()` rejects the PEFT-format keys that Stage 1 saves (the
+  `base_model.model.` prefix), so `inference/pipeline.py` always falls back to rewriting
+  the adapter into a temporary directory and loading that. It works, but the first
+  attempt is wasted and used to dump a multi-thousand-character error into the log; the
+  message is now truncated. Detecting the prefix up front would be the real fix.
+* **`inference.restore` is new in this version.** `D2RRestorer` / `restore_image` are
+  covered by `test_inference_api.py` using injected stubs, and were smoke-tested once
+  end to end against real checkpoints, but the API should still be treated as
+  provisional.
 
 ## 3. API stability
 

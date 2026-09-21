@@ -908,6 +908,27 @@ class Stage2GANTrainer:
         if self.accelerator.is_main_process:
             print("=== 第二阶段训练完成 ===")
 
+    def _model_definition(self) -> str:
+        """由生成器自描述导出，避免描述与实现脱节。
+
+        这个字段曾经硬编码为 "7 input channels [Stage-1 output, masked original, mask]"，
+        而 ``_refine()`` 早已改为 4 通道 ``[I_S1, M]``；``scripts/control_budget_report.py``
+        会原样把它写进论文 Table 4，因此会描述一个代码并不实现的架构。现在改为向模型
+        要描述（``SimpleUNetGeneratorWithTexture.architecture_summary``），通道数由实例导出。
+        """
+        gen = getattr(self, "generator", None)
+        try:
+            gen = self.accelerator.unwrap_model(gen)
+        except Exception:
+            pass
+        summary = getattr(gen, "architecture_summary", None)
+        if summary:
+            return "SimpleUNetGeneratorWithTexture — " + summary
+        return (
+            "SimpleUNetGeneratorWithTexture (residual refinement over the frozen Stage-1 "
+            "output); architecture summary unavailable on this instance"
+        )
+
     def _write_budget_report(self):
         """写出 Table 4 所需的预算记录（参数量 / 更新步数 / GPU·h）。"""
         if not self.accelerator.is_main_process:
@@ -915,13 +936,7 @@ class Stage2GANTrainer:
         record = {
             "stage": "stage2_gan_refinement",
             "protocol_id": self.PROTOCOL_ID,
-            "model_definition": (
-                "SimpleUNetGeneratorWithTexture (residual refinement over the frozen Stage-1 output): "
-                "7 input channels [Stage-1 output, masked original, mask], enhanced encoder with "
-                "SE blocks and self-attention, 12-channel multi-filter texture encoder "
-                "(3 RGB + 3 Canny + 1 Sobel + 1 Laplacian + 4 Gabor) and texture attention gating; "
-                "learnable residual scaling initialised to 0.3"
-            ),
+            "model_definition": self._model_definition(),
             "losses": (
                 "hinge GAN (lambda=%.3g) + masked L1 (lambda=%.3g) + masked normalised Sobel texture "
                 "(lambda=%.3g)" % (self.lambda_gan, self.lambda_l1, self.lambda_texture)

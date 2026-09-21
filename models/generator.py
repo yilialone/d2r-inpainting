@@ -278,6 +278,7 @@ class SimpleUNetGeneratorWithTexture(nn.Module):
             )
 
         self.residual_scale = residual_scale
+        self.in_channels = in_channels
         self.base_channels = base_channels
         self.use_full_reconstruction = use_full_reconstruction
         self.use_enhanced_encoder = use_enhanced_encoder
@@ -341,6 +342,30 @@ class SimpleUNetGeneratorWithTexture(nn.Module):
 
         # 最终激活
         self.final_activation = nn.Sigmoid() if use_full_reconstruction else nn.Tanh()
+
+    @property
+    def architecture_summary(self) -> str:
+        """供论文正文 / Table 4 直接引用的架构描述。
+
+        通道数由实际实例导出（``self.in_channels``），而不是写死在文档字符串里。
+        这样做的原因很具体：本类的预算报告曾长期硬编码为
+        "7 input channels [Stage-1 output, masked original, mask]"，而 ``_refine()``
+        早已改为 4 通道；那段字符串会被 ``scripts/control_budget_report.py`` 直接
+        搬进论文表格，描述了一个代码并不实现的架构。让模型自描述可以杜绝再次脱节。
+        """
+        return (
+            "texture-aware refinement U-Net over the frozen Stage-1 output "
+            "({} input channels: Stage-1 output I_S1 (3) + mask M (1); the ground truth "
+            "enters no input path), SE channel attention and self-attention in the encoder, "
+            "a 12-channel multi-filter texture encoder (3 RGB + 3 Canny + 1 Sobel + "
+            "1 Laplacian + 4 Gabor) with texture attention gating, base width {}, "
+            "{} prediction with learnable residual scaling initialised to {:.3g}"
+        ).format(
+            self.in_channels,
+            self.base_channels,
+            "full-reconstruction" if self.use_full_reconstruction else "residual",
+            float(self.residual_scale),
+        )
 
     def _simple_block(self, in_ch, out_ch, batch_norm=True):
         layers = [

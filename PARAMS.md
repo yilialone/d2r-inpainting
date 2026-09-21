@@ -134,9 +134,11 @@ Table 4 报告脚本）。缺少可选依赖 `lpips` 时 F 节会跳过推理子
 稿件均未包含。
 
 **本仓库尚未完成，仍在维护中。** 已知缺陷、粗糙之处、API 稳定性说明与维护承诺见
-`docs/STATUS.md`。其中最需要留意的一条：Stage-2 的 `budget_report.json` 里
-`model_definition` 仍写成 7 通道输入，而实际协议已是 4 通道 —— 该字符串会被
-`scripts/control_budget_report.py` 直接搬进论文 Table 4，**引用前必须核对**。
+`docs/STATUS.md`。其中一条已在本版修复：Stage-2 的 `budget_report.json` 里
+`model_definition` 曾硬编码为 7 通道输入，而实际协议已是 4 通道 —— 该字符串会被
+`scripts/control_budget_report.py` 直接搬进论文 Table 4。现在该字段由
+`SimpleUNetGeneratorWithTexture.architecture_summary` 生成，通道数从实例导出，不会再脱节；
+但**修复前生成的旧报告不会被追溯更正**，引用前须重新生成或手工订正。
 
 代码许可为 Apache-2.0（见 `LICENSE`），第三方组件与基座权重许可见 `NOTICE`。
 数据许可是独立的：`data/public_subset/LICENSE` 只覆盖图像（CC0 1.0），不覆盖代码。
