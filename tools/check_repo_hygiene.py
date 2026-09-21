@@ -32,20 +32,20 @@ FORBIDDEN_EXT = {
 }
 IMAGE_EXT = {".jpg", ".jpeg", ".png", ".bmp", ".tif", ".tiff", ".webp"}
 IMAGE_ALLOWED_PREFIX = os.path.join("data", "public_subset")
-# 禁止随仓库发布任何"真实划分清单"：manifest.csv 或 *_manifest.csv。
-# 只有纯占位的 eval/manifest_template.csv 例外。
-MANIFEST_ALLOWED = {"manifest_template.csv"}
+# 禁止随仓库发布任何"真实划分清单"（manifest.csv / *_manifest.csv）：
+# 本仓库不分发数据划分，用户自己的清单不应被提交。
+MANIFEST_ALLOWED = set()
 REQUIRED = [
     "README.md", "LICENSE", "NOTICE", "CITATION.cff",
     "requirements.txt", ".gitignore", ".gitattributes",
     ".github/workflows/tests.yml",
     "train.py", "infer.py", "evaluate.py", "test_paper_params.py", "test_inference_api.py",
     "inference/restore.py",
-    "docs/PROTOCOL.md", "docs/RESULTS.md", "docs/ARCHITECTURE.md", "docs/STATUS.md",
+    "docs/PROTOCOL.md", "docs/STATUS.md",
     "data/README.md", "data/public_subset/README.md",
     "data/public_subset/LICENSE", "data/public_subset/SOURCES.csv",
     "data/public_subset/CREDITS.md", "data/public_subset/CITATION.cff",
-    "tools/check_protocol.py", "tools/check_image_metadata.py",
+    "tools/check_image_metadata.py",
     "tools/test_check_image_metadata.py", "tools/check_repo_hygiene.py",
 ]
 MAX_FILE_MB = 5.0
@@ -194,7 +194,7 @@ def main():
     if manifests:
         bad("存在可能含真实划分的清单：" + ", ".join(manifests))
     else:
-        ok("无真实划分清单（仅保留 manifest_template.csv）")
+        ok("无真实数据划分清单")
 
     if oversized:
         bad(f"{len(oversized)} 个文件超过 {MAX_FILE_MB} MB：" + ", ".join(oversized[:3]))

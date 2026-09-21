@@ -20,7 +20,7 @@
 4 通道的"扣洞图像 + mask"，输出是对缺失内容的直接预测；它也**不读取 Stage-1 缓存**，
 因此是完全独立的一次训练。
 
-用法（详见 SINGLE_STAGE.md）：
+用法：
     python train.py --mode single_stage --seed 2026 \\
         --single_stage_output_dir single_stage_results_seed2026 \\
         --single_stage_budget_ref_stage1 stage1_results_seed2026 \\

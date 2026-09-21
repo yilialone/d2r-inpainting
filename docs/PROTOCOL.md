@@ -2,7 +2,7 @@
 
 This document specifies the exact tensor contracts the pipeline relies on, and why each
 one matters. Everything here is enforced in code and covered by assertions in
-`test_paper_params.py` and `tools/check_protocol.py`.
+`test_paper_params.py`.
 
 If you change any item marked **frozen**, you must bump the relevant `PROTOCOL_ID` and
 retrain from scratch — old checkpoints will be rejected on resume by design.
@@ -145,10 +145,9 @@ requires: bump the id → new output directory → `--resume_from_checkpoint non
 ## 9. Quick self-check
 
 ```bash
-python tools/check_protocol.py
 python test_paper_params.py --quick
 ```
 
-Both must pass before you trust any run. They verify the defaults, the channel order,
+It must pass before you trust any run. It verifies the defaults, the channel order,
 the 4-channel Stage-2 contract, the absence of ground-truth leakage, and the
 outside-mask byte-exactness property.

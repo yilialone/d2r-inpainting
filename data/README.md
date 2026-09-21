@@ -49,7 +49,8 @@ It **is not** a runnable benchmark set:
   nothing here can be fed to the code as-is.
 * The article's damage masks are derived annotations and are not redistributed.
 * The 51-pair evaluation split is likewise not distributed — `evaluate.py` expects you
-  to build your own manifest (see `eval/manifest_template.csv` for the format).
+  to build your own manifest with the columns `sample_id,image_path,mask_path` (see
+  `scripts/build_dataset_manifest.py`).
 
 To exercise the code you therefore need your own image/mask pairs. To use these
 photographs as *inputs* you would have to annotate masks yourself; that is a legitimate

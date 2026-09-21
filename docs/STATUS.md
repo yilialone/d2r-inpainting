@@ -42,7 +42,8 @@ judge what they are relying on, not as a promise of when each will be addressed.
   ignores rather than resumes.
 * **No script regenerates the paper's qualitative comparison figures.** They were
   produced ad hoc during revision and are not part of this repository.
-* Only `scripts/paired_uncertainty.py` has a test; the rest of `scripts/` is untested.
+* Only one file under `scripts/` has a test suite; the rest is exercised only through
+  `test_paper_params.py` section F.
 * `--num_workers 0` is required on Windows and in sandboxes that forbid named pipes. The
   default of `4` will fail in those environments.
 * There is no container image and no pinned lockfile, so a fresh install can drift from
@@ -70,8 +71,7 @@ commit rather than tracking `main`.
   guarantee.** Issues and pull requests are welcome and will be handled as time allows.
 * The protocol invariants in [`PROTOCOL.md`](PROTOCOL.md) are the part we treat as
   load-bearing: changes to the input contract must bump the relevant `PROTOCOL_ID` and
-  must keep `test_paper_params.py` and `tools/check_protocol.py` passing. Everything
-  else is open to change.
+  must keep `test_paper_params.py` passing. Everything else is open to change.
 * The CI in [`.github/workflows/tests.yml`](../.github/workflows/tests.yml) defines the
   minimum bar a change must clear. It runs on CPU without weights or data, so passing it
   does **not** establish scientific validity — only that the protocol contract and the

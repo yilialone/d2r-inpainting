@@ -44,7 +44,7 @@ DEFAULT_MODEL = os.environ.get("D2R_SD_MODEL", "runwayml/stable-diffusion-inpain
 
 # 评测清单：本仓库**不分发**数据集，也不分发作者使用的划分清单。
 # 请用 scripts/build_dataset_manifest.py 基于你自己的数据生成，或用 --manifest 指定。
-# 格式示例见 eval/manifest_template.csv（纯占位内容，不含任何真实数据）。
+# 清单必需的三列：sample_id, image_path, mask_path（路径相对清单文件所在目录解析）。
 DEFAULT_MANIFEST = os.path.join(ROOT, "eval", "manifest.csv")
 # 默认输出目录（预测图、对比图与指标报告）
 EVAL_OUT = os.path.join(ROOT, "eval_outputs")
@@ -59,7 +59,8 @@ def load_pairs(manifest_path):
             "  python scripts/build_dataset_manifest.py --split test \\\n"
             "      --image_dir <你的图像目录> --mask_dir <你的掩膜目录> \\\n"
             "      --output eval/manifest.csv\n"
-            "然后用 --manifest 指向它。格式示例见 eval/manifest_template.csv。"
+            "然后用 --manifest 指向它。清单必需的三列是 "
+            "sample_id, image_path, mask_path。"
         )
     mdir = os.path.dirname(os.path.abspath(manifest_path))
     pairs = []

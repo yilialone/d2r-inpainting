@@ -65,7 +65,7 @@ __all__ = ["D2RRestorer", "restore_image", "MODES", "DEFAULT_PROMPT"]
 
 MODES = ("base", "stage1_only", "d2r", "single_stage")
 
-#: 论文评测协议使用空 prompt（见 docs/RESULTS.md §4：训练所用提示词反而略差）。
+#: 论文评测协议使用空 prompt（实测训练所用的那段提示词反而略差）。
 DEFAULT_PROMPT = ""
 
 #: 训练与评测统一在 512×512 上进行。
