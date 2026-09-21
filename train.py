@@ -478,7 +478,8 @@ def build_parser():
     # 模型参数
     parser.add_argument("--model_name", type=str,
                         default="runwayml/stable-diffusion-inpainting",
-                        help="服务器上的 Stable Diffusion Inpainting 本地模型目录")
+                        help="Stable Diffusion Inpainting 基座：Hugging Face Hub id 或本地 "
+                             "snapshot 目录；也可用环境变量 D2R_SD_MODEL 指定")
     parser.add_argument("--stage1_output_dir", type=str, default="./stage1_results")
     parser.add_argument("--stage2_output_dir", type=str, default="./stage2_results")
     parser.add_argument("--stage1_checkpoint_dir", type=str, default="./stage1_results/checkpoint-best")

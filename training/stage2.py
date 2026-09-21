@@ -817,7 +817,7 @@ class Stage2GANTrainer:
         # 生成/加载 Stage1 缓存
         if self.use_cache:
             # 缓存生成阶段只需要扩散管线；生成器与判别器此时若留在 GPU 上会与本就不宽裕的
-            # 显存（本机 8GB）争抢，实测把单样本缓存时间从约 5 秒拖到约 160 秒。
+            # 显存（参考机为 8GB）争抢，实测把单样本缓存时间从约 5 秒拖到约 160 秒。
             # 因此先把它们挪到 CPU，缓存结束后再随 accelerator.prepare 回到 GPU。
             device = self.accelerator.device
             if device.type == "cuda":

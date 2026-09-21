@@ -1,17 +1,21 @@
-# D2R-inpainting — 论文参数版代码
+# 参数对照表（论文 ↔ 代码）
 
-本目录以 `early-internal-implementation` 为基体，将全部可配置参数改为论文（npj Heritage Science 投稿稿）中的数值。
-**训练数据保持原样**（`dataset/` 目录结构与路径未改动）；其余参数以论文为准。
+本仓库把全部可配置参数固定为论文（npj Heritage Science 投稿稿）中的数值，并以**代码为准**
+记录二者对应关系。训练数据不随仓库分发（`dataset/` 只含加载与增强代码）；其余参数以论文为准。
+
+下文提到的"早期实现"指作者在整理本仓库之前的内部版本；`## 相对早期实现的主要修正`
+一节记录了本仓库与它的差异，列出这些差异是因为其中若干项会直接影响结果的可解释性
+（例如真值泄漏、优化器未真正 step、检查点格式不兼容）。
 
 ## 参数对照表（论文 ↔ 代码）
 
 | 参数 | 论文值 | 代码位置 | 状态 |
 |---|---|---|---|
 | Stage-1 学习率 | 5×10⁻⁴ | `train.py --learning_rate`（默认 5e-4） | ✅ |
-| Stage-2 学习率 | 1×10⁻⁴ | `train.py --stage2_lr`（默认 1e-4，**新增**，与原版共用 lr 的 bug 已修复） | ✅ |
-| 批大小 | 1 | `train.py --train_batch_size`（默认 1，原版 2） | ✅ |
+| Stage-2 学习率 | 1×10⁻⁴ | `train.py --stage2_lr`（默认 1e-4，**新增**，与早期实现共用 lr 的 bug 已修复） | ✅ |
+| 批大小 | 1 | `train.py --train_batch_size`（默认 1，早期实现 2） | ✅ |
 | 最大 epoch | 100 | `--stage1_epochs` / `--stage2_epochs`（默认 100） | ✅ |
-| 早停 patience | 20 | `train.py --early_stopping_patience`（默认 20，原版 30）；`training/stage1.py`、`training/stage2.py` 默认值同步为 20 | ✅ |
+| 早停 patience | 20 | `train.py --early_stopping_patience`（默认 20，早期实现 30）；`training/stage1.py`、`training/stage2.py` 默认值同步为 20 | ✅ |
 | 输入分辨率 | 512×512 | `--resolution`（默认 512） | ✅ |
 | 混合精度 | fp16 | 两阶段 Accelerator 均 fp16 | ✅ |
 | LoRA r / α / dropout | 32 / 64 / 0.05 | `--lora_rank` / `--lora_alpha`；dropout 0.05 固定 | ✅ |
@@ -21,7 +25,7 @@
 | VGG 感知损失 | 论文未采用 | `--use_perceptual_loss`（默认 False） | ✅ |
 | 12 通道纹理描述子 | 3RGB+3Canny+1Sobel+1Laplacian+4Gabor | `models/generator.py`（未改动） | ✅ |
 | 判别器 | U-Net 逐像素 logits（限于受损区域） | `models/discriminator.py`（无末端 sigmoid） | ✅ |
-| 随机种子 | 论文未指定 | `--seed`（默认 42，沿用原版） | — |
+| 随机种子 | 论文未指定 | `--seed`（默认 42，沿用早期实现） | — |
 | 梯度累积 | 有效 batch size 必须为 1 | `--gradient_accumulation_steps`（默认 1） | ✅ |
 | 训练数据 | 待 manifest 核验 | 支持 `--train_manifest` / `--val_manifest` | ⚠️ |
 
@@ -57,10 +61,10 @@ CUDA_VISIBLE_DEVICES=0,1 accelerate launch --multi_gpu --num_processes 2 train.p
   --cache_dir stage2_results_2gpu/stage1_cache
 ```
 
-## 相对原版的其他修复
+## 相对早期实现的主要修正
 
-1. **`train.py` import bug**：原版 `from data import create_dataloaders` 指向不存在的模块，已改为 `from dataset.dataset import create_dataloaders`（原版一运行即 ImportError）。
-2. **Stage-2 学习率接线**：原版 `train.py` 把同一个 `--learning_rate`（5e-4）传给两阶段，导致 Stage-2 实际用 5e-4 而非论文的 1e-4；现拆分为 `--learning_rate`（Stage-1）与 `--stage2_lr`（Stage-2，默认 1e-4）。
+1. **`train.py` import bug**：早期实现 `from data import create_dataloaders` 指向不存在的模块，已改为 `from dataset.dataset import create_dataloaders`（早期实现一运行即 ImportError）。
+2. **Stage-2 学习率接线**：早期实现 `train.py` 把同一个 `--learning_rate`（5e-4）传给两阶段，导致 Stage-2 实际用 5e-4 而非论文的 1e-4；现拆分为 `--learning_rate`（Stage-1）与 `--stage2_lr`（Stage-2，默认 1e-4）。
 3. **`build_parser()`**：参数解析器独立成函数，供测试脚本校验默认值。
 4. **扣洞修复（代码审计 🔴-1）→ 通道精简（v4）**：
    - 第一步（🔴-1）：`training/stage2.py` `_refine()` 把生成器输入的原图通道由"未扣洞原图"改为 **`orig_img×(1−mask) + stage1_out×mask`**，消除掩膜区域内真值像素对生成器与纹理编码器的泄漏；`inference/pipeline.py` `refine_with_stage2()` 做相同处理。
