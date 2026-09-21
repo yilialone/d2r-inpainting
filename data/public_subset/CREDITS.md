@@ -3,9 +3,8 @@
 Reproduce the relevant line when reusing an image.
 
 * `02_museum_Cleveland_CC0/02-01.jpg` — The Cleveland Museum of Art, 1972.34. CC0 1.0 Universal (Public Domain Dedication).
-* `02_museum_Cleveland_CC0/02-02.jpg` — The Cleveland Museum of Art, 1972.34. CC0 1.0 Universal (Public Domain Dedication).
+* `02_museum_Cleveland_CC0/02-02.jpg` — The Cleveland Museum of Art, 1995.281. CC0 1.0 Universal (Public Domain Dedication).
 * `02_museum_Cleveland_CC0/02-03.jpg` — The Cleveland Museum of Art, 1995.281. CC0 1.0 Universal (Public Domain Dedication).
-* `02_museum_Cleveland_CC0/02-04.jpg` — The Cleveland Museum of Art, 1995.281. CC0 1.0 Universal (Public Domain Dedication).
 * `03_museum_Harvard_no_permission_required/03-01.jpg` — Harvard Art Museums/Arthur M. Sackler Museum, Bequest of Grenville L. Winthrop, 1943.52.143. Photo: President and Fellows of Harvard College.
 * `03_museum_Harvard_no_permission_required/03-02.jpg` — Harvard Art Museums/Arthur M. Sackler Museum, Bequest of Grenville L. Winthrop, 1943.52.145. Photo: President and Fellows of Harvard College.
 * `03_museum_Harvard_no_permission_required/03-03.jpg` — Harvard Art Museums/Arthur M. Sackler Museum, Bequest of Grenville L. Winthrop, 1943.52.145. Photo: President and Fellows of Harvard College.
@@ -19,7 +18,11 @@ Reproduce the relevant line when reusing an image.
 
 ## Notes
 
-* Author photographs were taken at the excavation sites or in museum stores; the site or
-  tomb number is given so that the object can be identified.
-* The CC0 material in folders `02_` and `04_` carries no attribution requirement; the
-  credit lines are given here as a record of provenance.
+* All 13 files are museum open-access photography; none are photographs taken by the
+  authors, and no damage masks are distributed.
+* Folders `02_` and `04_` are CC0 and carry no attribution requirement; the credit
+  lines are given here as a record of provenance. Folder `03_` is likewise released
+  without a permission requirement (see `LICENSE`).
+* Two objects appear from two viewpoints each — `1995.281` (Cleveland, `02-02`/`02-03`)
+  and `1943.52.145` (Harvard, `03-02`/`03-03`). They are distinct photographs, not
+  duplicates; see `README.md` for the object-level summary.

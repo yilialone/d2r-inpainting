@@ -91,7 +91,7 @@ See [`docs/PROTOCOL.md`](docs/PROTOCOL.md) for the full specification.
 ├── scripts/                     # manifest builder, server check, budget report, uncertainty
 ├── data/
 │   ├── README.md                # what is released, and what is not
-│   └── public_subset/           # 14 museum CC0 images + provenance (see Data availability)
+│   └── public_subset/           # 13 museum CC0 images + provenance (see Data availability)
 ├── tools/
 │   ├── check_protocol.py        # asserts the paper defaults are intact
 │   ├── check_image_metadata.py  # EXIF/GPS audit; lossless GPS stripping
@@ -114,7 +114,7 @@ This repository ships **one small, licence-clear image subset** and no other dat
 
 | What | Status |
 |---|---|
-| `data/public_subset/` | **Included** — 14 museum open-access JPEGs, ~3.2 MB, all **CC0 1.0 Universal** |
+| `data/public_subset/` | **Included** — 13 museum open-access JPEGs (11 objects), ~2.9 MB, all **CC0 1.0 Universal** |
 | Study corpus (full) | **Not included** — not redistributed; contact the corresponding author |
 | Damage masks | **Not included** — derived annotations, not redistributed |
 | Evaluation split (51 pairs) | **Not included** — `evaluate.py` expects you to build your own manifest |
@@ -122,7 +122,7 @@ This repository ships **one small, licence-clear image subset** and no other dat
 
 ### The public image subset
 
-`data/public_subset/` contains 14 photographs from museum open-access programmes (The
+`data/public_subset/` contains 13 photographs from museum open-access programmes (The
 Cleveland Museum of Art, Harvard Art Museums, and the National Museum of Asian Art,
 Smithsonian Institution), each with a documented CC0 rights basis. See
 [`data/public_subset/README.md`](data/public_subset/README.md) for the per-folder

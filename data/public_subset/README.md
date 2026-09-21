@@ -4,7 +4,7 @@ Image subset released with the study "Two-Stage Structural Reconstruction and Te
 Refinement for Digital Restoration of Ancient Chinese Mountain-Pattern Bronze Mirror
 Photographs" (manuscript ID `a062e16c-271f-4765-88b0-c2ef3985d848`).
 
-* **14 images**, ~3.2 MB
+* **13 images** covering **11 objects**, ~2.9 MB
 * JPEG
 * Per-image provenance and credit lines: [`SOURCES.csv`](SOURCES.csv), [`CREDITS.md`](CREDITS.md)
 * **Licence: CC0 1.0 Universal** for every file in this directory (see [`LICENSE`](LICENSE))
@@ -12,14 +12,19 @@ Photographs" (manuscript ID `a062e16c-271f-4765-88b0-c2ef3985d848`).
 ## What is included, and why
 
 Only images whose rights status is unambiguous *and* whose licence permits
-redistribution without a permission request are released here. All 14 files come from
+redistribution without a permission request are released here. All 13 files come from
 museum open-access programmes:
 
-| Folder | Images | Source | Rights basis |
-|---|---|---|---|
-| `02_museum_Cleveland_CC0/` | 4 | The Cleveland Museum of Art | **CC0 1.0 Universal** (Open Access API: `share_license_status = CC0`) |
-| `03_museum_Harvard_no_permission_required/` | 4 | Harvard Art Museums | API reports `imagepermissionlevel = 0`, i.e. no permission required; objects are Warring States period, public domain |
-| `04_museum_NMAA_Smithsonian_CC0/` | 6 | National Museum of Asian Art, Smithsonian Institution | **CC0** under the museum's Image Services policy |
+| Folder | Images | Objects | Source | Rights basis |
+|---|---|---|---|---|
+| `02_museum_Cleveland_CC0/` | 3 | 2 | The Cleveland Museum of Art | **CC0 1.0 Universal** (Open Access API: `share_license_status = CC0`) |
+| `03_museum_Harvard_no_permission_required/` | 4 | 3 | Harvard Art Museums | API reports `imagepermissionlevel = 0`, i.e. no permission required; objects are Warring States period, public domain |
+| `04_museum_NMAA_Smithsonian_CC0/` | 6 | 6 | National Museum of Asian Art, Smithsonian Institution | **CC0** under the museum's Image Services policy |
+
+The file count exceeds the object count because two objects are represented by two
+photographs from different viewpoints — `1995.281` (Cleveland, `02-02`/`02-03`) and
+`1943.52.145` (Harvard, `03-02`/`03-03`). They are distinct photographs, not duplicates.
+If you need one image per object, keep either one of each pair.
 
 CC0 material carries no attribution requirement; credit lines are nevertheless given in
 `CREDITS.md` so that provenance is preserved.
@@ -108,11 +113,11 @@ python tools/check_image_metadata.py --dir data/public_subset --strip-gps
 
 ```
 .
-├── 02_museum_Cleveland_CC0/                  4 images
-├── 03_museum_Harvard_no_permission_required/ 4 images
-├── 04_museum_NMAA_Smithsonian_CC0/           6 images
-├── SOURCES.csv      per-image source table (14 rows)
-├── CREDITS.md       credit lines to reproduce
+├── 02_museum_Cleveland_CC0/                  3 images / 2 objects
+├── 03_museum_Harvard_no_permission_required/ 4 images / 3 objects
+├── 04_museum_NMAA_Smithsonian_CC0/           6 images / 6 objects
+├── SOURCES.csv      per-image source table (13 rows)
+├── CREDITS.md       credit lines to reproduce (13 lines)
 ├── LICENSE          CC0 1.0 Universal
 ├── CITATION.cff
 └── README.md
