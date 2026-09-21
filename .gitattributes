@@ -1,0 +1,29 @@
+# 统一换行符：仓库内一律 LF，避免 Windows 检出时产生整文件级 diff
+* text=auto
+
+*.py    text eol=lf
+*.md    text eol=lf
+*.txt   text eol=lf
+*.csv   text eol=lf
+*.json  text eol=lf
+*.yml   text eol=lf
+*.yaml  text eol=lf
+*.toml  text eol=lf
+*.cfg   text eol=lf
+*.sh    text eol=lf
+*.bat   text eol=crlf
+*.ps1   text eol=crlf
+.gitignore    text eol=lf
+.gitattributes text eol=lf
+
+# 二进制文件不做换行转换（这些类型默认不入库，此处仅作保险）
+*.png  binary
+*.jpg  binary
+*.jpeg binary
+*.bmp  binary
+*.tif  binary
+*.pth  binary
+*.pt   binary
+*.ckpt binary
+*.safetensors binary
+*.bin  binary

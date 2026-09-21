@@ -1,0 +1,4 @@
+split,sample_id,image_path,mask_path
+train,sample_0001,images/sample_0001.png,masks/sample_0001.png
+train,sample_0002,images/sample_0002.png,masks/sample_0002.png
+val,sample_0100,images/sample_0100.png,masks/sample_0100.png

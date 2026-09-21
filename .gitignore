@@ -1,0 +1,86 @@
+# ─────────────────────────────────────────────────────────────
+# 模型权重 / 检查点：体积大且不可复现，一律不入库
+# ─────────────────────────────────────────────────────────────
+*.pth
+*.pt
+*.safetensors
+*.ckpt
+*.bin
+*.h5
+*.onnx
+
+# ─────────────────────────────────────────────────────────────
+# 数据集：图像与掩膜需另行获取，不随仓库分发
+# ─────────────────────────────────────────────────────────────
+datasets/
+data/
+*.jpg
+*.jpeg
+*.png
+*.bmp
+*.tif
+*.tiff
+
+# 数据划分清单：包含使用者自己的数据路径与样本标识，务必不要提交。
+# 仓库只保留纯占位的格式示例 eval/manifest_template.csv。
+eval/manifest.csv
+eval/*_manifest.csv
+manifests/
+!eval/manifest_template.csv
+
+# 如确有需要展示的示意图，放在 docs/assets/ 下并取消下面的注释
+# !docs/assets/**
+# !docs/assets/*.png
+
+# ─────────────────────────────────────────────────────────────
+# 训练 / 评测产物
+# ─────────────────────────────────────────────────────────────
+stage1_results*/
+stage2_results*/
+single_stage_results*/
+eval_outputs/
+*_cache/
+checkpoint-*/
+cache/
+outputs/
+
+# 训练过程写出的元数据（每次运行都会重新生成）
+run_config.json
+budget_report.json
+training_log.jsonl
+table*.md
+TABLE*.md
+
+# 日志
+*.log
+logs/
+
+# ─────────────────────────────────────────────────────────────
+# Python
+# ─────────────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+dist/
+*.egg-info/
+.eggs/
+.venv/
+venv/
+env/
+.ipynb_checkpoints/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# ─────────────────────────────────────────────────────────────
+# 编辑器 / 操作系统
+# ─────────────────────────────────────────────────────────────
+.vscode/
+.idea/
+*.swp
+.DS_Store
+Thumbs.db
+desktop.ini
