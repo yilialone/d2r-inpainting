@@ -23,11 +23,17 @@ judge what they are relying on, not as a promise of when each will be addressed.
   from the instance, so it can no longer drift. **Reports generated before the fix are
   not retroactively corrected — regenerate them, or edit the string by hand, before
   quoting one in a manuscript.**
-* **The discriminator did not converge** in the reported Stage-2 run: the hinge loss
-  stayed pinned at its 2.0 floor for every epoch, i.e. it produced near-constant logits.
-  Any claim that depends on adversarial texture refinement needs re-examination.
-* **Every reported number is single-seed** (2026) on one internal 51-pair split. No
-  significance claim is possible from one run per configuration.
+* **Training results are not stored in this repository.** This is a code release only:
+  no training logs, no loss curves, no per-run metric records and no checkpoints are
+  distributed here. The repository therefore makes no claim about the outcome of any
+  particular training run, and nothing here can be used to audit the numerical results
+  reported in the manuscript. The manuscript's own statements are authoritative for
+  those numbers.
+* **The loaders and the evaluation split are configuration, not data.** The corpus and
+  the article's damage masks are not distributed (see `data/README.md`), so the
+  artefacts and masks that produced any published number are not available here. Nothing
+  in this repository fixes a particular 51-pair evaluation set; `evaluate.py` expects
+  you to supply your own manifest with the columns `sample_id,image_path,mask_path`.
 
 ### Rough edges
 
