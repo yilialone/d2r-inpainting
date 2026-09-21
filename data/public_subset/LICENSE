@@ -1,7 +1,7 @@
 # Licensing of this image subset
 
-This file covers the 13 images currently shipped in `data/public_subset/`. Every one of
-them originates from a museum open-access programme and is released under **CC0 1.0
+This file covers the nine images currently shipped in `data/public_subset/`. Every one
+of them originates from a museum open-access programme and is released under **CC0 1.0
 Universal**, which places the work in the public domain and permits reuse without
 attribution.
 
@@ -10,18 +10,21 @@ attribution.
 The Cleveland Museum of Art. Dedicated to the public domain under **CC0 1.0 Universal**:
 <https://creativecommons.org/publicdomain/zero/1.0/>
 
-## 2. `03_museum_Harvard_no_permission_required/`
-
-Harvard Art Museums. The museum's public API reports an image permission level of zero
-for these objects, denoting that the images are supplied without a permission
-requirement. The objects are of the Warring States period and therefore in the public
-domain. The credit line specified in `CREDITS.md` should be reproduced.
-
-## 3. `04_museum_NMAA_Smithsonian_CC0/`
+## 2. `04_museum_NMAA_Smithsonian_CC0/`
 
 National Museum of Asian Art, Smithsonian Institution. Released under **CC0** in
 accordance with the museum's Image Services policy:
 <https://asia.si.edu/research/research-resources/image-services-and-permissions/>
+
+## 3. Museum photographs whose licence basis is not settled
+
+Photographs supplied by museums that have neither placed them in the public domain nor
+granted a redistribution licence are not included in this subset. This applies to the
+Harvard Art Museums images used in the article (accession numbers 1943.52.143,
+1943.52.145 and 1943.52.147): the museum's photographic records carry their own
+copyright notice and no open licence, so they are reproduced in the article under the
+museum's terms for scholarly reproduction only, and written confirmation is being sought
+before any redistribution.
 
 ## 4. Author field photographs — not currently included
 

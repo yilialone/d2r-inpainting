@@ -4,7 +4,7 @@ Image subset released with the study "Two-Stage Structural Reconstruction and Te
 Refinement for Digital Restoration of Ancient Chinese Mountain-Pattern Bronze Mirror
 Photographs" (manuscript ID `a062e16c-271f-4765-88b0-c2ef3985d848`).
 
-* **13 images** covering **11 objects**, ~2.9 MB
+* **9 images** covering **8 objects**, ~1.6 MB
 * JPEG
 * Per-image provenance and credit lines: [`SOURCES.csv`](SOURCES.csv), [`CREDITS.md`](CREDITS.md)
 * **Licence: CC0 1.0 Universal** for every file in this directory (see [`LICENSE`](LICENSE))
@@ -12,19 +12,18 @@ Photographs" (manuscript ID `a062e16c-271f-4765-88b0-c2ef3985d848`).
 ## What is included, and why
 
 Only images whose rights status is unambiguous *and* whose licence permits
-redistribution without a permission request are released here. All 13 files come from
-museum open-access programmes:
+redistribution without a permission request are released here. All nine files come
+from museum open-access programmes:
 
 | Folder | Images | Objects | Source | Rights basis |
 |---|---|---|---|---|
 | `02_museum_Cleveland_CC0/` | 3 | 2 | The Cleveland Museum of Art | **CC0 1.0 Universal** (Open Access API: `share_license_status = CC0`) |
-| `03_museum_Harvard_no_permission_required/` | 4 | 3 | Harvard Art Museums | API reports `imagepermissionlevel = 0`, i.e. no permission required; objects are Warring States period, public domain |
 | `04_museum_NMAA_Smithsonian_CC0/` | 6 | 6 | National Museum of Asian Art, Smithsonian Institution | **CC0** under the museum's Image Services policy |
 
-The file count exceeds the object count because two objects are represented by two
-photographs from different viewpoints — `1995.281` (Cleveland, `02-02`/`02-03`) and
-`1943.52.145` (Harvard, `03-02`/`03-03`). They are distinct photographs, not duplicates.
-If you need one image per object, keep either one of each pair.
+The file count exceeds the object count because one object is represented by two
+photographs from different viewpoints — `1995.281` (Cleveland, `02-02`/`02-03`). The two
+files are distinct photographs, not duplicates. If you need one image per object, keep
+either one of the pair.
 
 CC0 material carries no attribution requirement; credit lines are nevertheless given in
 `CREDITS.md` so that provenance is preserved.
@@ -70,13 +69,21 @@ time**, because their rights status is not yet settled. They will be added once 
 at which point `README.md`, `LICENSE`, `CREDITS.md`, `SOURCES.csv` and `CITATION.cff`
 in this directory must be updated together and consistently.
 
-### 2. Photographs taken by the authors inside museum galleries
+### 2. Museum photographs whose licence basis is not settled
+
+Photographs supplied by museums that have neither placed them in the public domain nor
+granted a redistribution licence are not included. This applies to the Harvard Art
+Museums images used in the article (1943.52.143, 1943.52.145, 1943.52.147): the museum's
+photographic records carry their own copyright notice and no open licence, and written
+confirmation is being sought before any redistribution.
+
+### 3. Photographs taken by the authors inside museum galleries
 
 The copyright in a photograph belongs to the person who pressed the shutter, but museum
 conditions of entry normally restrict such photographs to personal, non-commercial use
 and do not cover redistribution. The photographs concerned are used in the article only.
 
-### 3. Photographs taken from museum websites or from excavation reports and catalogues
+### 4. Photographs taken from museum websites or from excavation reports and catalogues
 
 These remain subject to the copyright and access policies of the holding institutions
 and publishers. Several Chinese museums, including the Palace Museum, the National
@@ -114,10 +121,9 @@ python tools/check_image_metadata.py --dir data/public_subset --strip-gps
 ```
 .
 ├── 02_museum_Cleveland_CC0/                  3 images / 2 objects
-├── 03_museum_Harvard_no_permission_required/ 4 images / 3 objects
 ├── 04_museum_NMAA_Smithsonian_CC0/           6 images / 6 objects
-├── SOURCES.csv      per-image source table (13 rows)
-├── CREDITS.md       credit lines to reproduce (13 lines)
+├── SOURCES.csv      per-image source table (9 rows)
+├── CREDITS.md       credit lines to reproduce (9 lines)
 ├── LICENSE          CC0 1.0 Universal
 ├── CITATION.cff
 └── README.md

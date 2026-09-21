@@ -4,11 +4,10 @@ This directory holds the **only** image data distributed with this repository.
 
 ```
 data/
-└── public_subset/         13 museum open-access JPEGs, CC0 1.0 Universal
+└── public_subset/         9 museum open-access JPEGs, CC0 1.0 Universal
     ├── 02_museum_Cleveland_CC0/
-    ├── 03_museum_Harvard_no_permission_required/
-    ├── 04_museum_NMAA_Smithsonian_CC0/
-    ├── SOURCES.csv        per-image provenance (14 rows)
+        ├── 04_museum_NMAA_Smithsonian_CC0/
+    ├── SOURCES.csv        per-image provenance (9 rows)
     ├── CREDITS.md         credit lines
     ├── LICENSE            CC0 1.0 Universal (images only)
     └── README.md

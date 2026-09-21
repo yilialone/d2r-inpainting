@@ -34,7 +34,7 @@ images in which white (value > 127) marks the region to restore. For reproducibl
 pass CSV manifests (`sample_id,image_path,mask_path`) via `--train_manifest` /
 `--val_manifest`.
 
-`data/public_subset/` holds 13 museum open-access photographs (CC0 1.0 Universal) with
+`data/public_subset/` holds 9 museum open-access photographs (CC0 1.0 Universal) with
 per-image provenance, as a visual reference for the corpus. It contains **no masks**, so
 it cannot be used as a benchmark.
 
