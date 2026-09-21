@@ -65,7 +65,12 @@ See [`docs/PROTOCOL.md`](docs/PROTOCOL.md) for the full specification.
 ├── metrics/                     # PSNR / SSIM / LPIPS / FID / KID with explicit mask semantics
 ├── utils/
 ├── scripts/                     # manifest builder, server check, budget report, uncertainty
-├── tools/check_protocol.py      # asserts the paper defaults are intact
+├── data/
+│   ├── README.md                # what is released, and what is not
+│   └── public_subset/           # 14 museum CC0 images + provenance (see Data availability)
+├── tools/
+│   ├── check_protocol.py        # asserts the paper defaults are intact
+│   └── check_image_metadata.py  # EXIF/GPS audit; lossless GPS stripping
 ├── eval/manifest_template.csv   # evaluation-manifest format example (placeholders only)
 └── docs/
     ├── PROTOCOL.md              # input/leakage invariants
@@ -76,17 +81,45 @@ See [`docs/PROTOCOL.md`](docs/PROTOCOL.md) for the full specification.
 
 ## Data availability
 
-**No data is distributed with this repository** — no images, no masks, no manifests of
-the authors' splits, and no model weights. `.gitignore` additionally blocks `*.png`,
-`*.jpg`, `datasets/` and `eval/*_manifest.csv` so a split listing cannot be committed by
-accident.
+This repository ships **one small, licence-clear image subset** and no other data:
 
-Use `eval/manifest_template.csv` only as a format reference; it contains placeholder rows
-and no real data.
+| What | Status |
+|---|---|
+| `data/public_subset/` | **Included** — 14 museum open-access JPEGs, ~3.2 MB, all **CC0 1.0 Universal** |
+| Study corpus (full) | **Not included** — not redistributed; contact the corresponding author |
+| Damage masks | **Not included** — derived annotations, not redistributed |
+| Evaluation split (51 pairs) | **Not included** — `evaluate.py` expects you to build your own manifest |
+| Model weights / checkpoints | **Not included** — obtained from Hugging Face Hub or trained locally |
 
-The corpus used in the manuscript is not redistributed here. Contact the corresponding
-author for access, and confirm object identity and usage rights before publishing any
-result derived from it.
+### The public image subset
+
+`data/public_subset/` contains 14 photographs from museum open-access programmes (The
+Cleveland Museum of Art, Harvard Art Museums, and the National Museum of Asian Art,
+Smithsonian Institution), each with a documented CC0 rights basis. See
+[`data/public_subset/README.md`](data/public_subset/README.md) for the per-folder
+inclusion table and [`data/README.md`](data/README.md) for how the subset relates to the
+code.
+
+Three things to note about it:
+
+* **It is not a benchmark set.** No masks are supplied, so nothing in it can be fed to
+  `evaluate.py` as-is. It documents the visual domain and the provenance of the corpus.
+* **It carries no EXIF.** No GPS coordinates, no camera identifiers, no capture dates.
+  Image metadata is an easily overlooked disclosure channel; precise coordinates of
+  archaeological sites are sensitive. [`tools/check_image_metadata.py`](tools/check_image_metadata.py)
+  audits a directory for GPS and other EXIF tags and can strip GPS losslessly.
+* **Ten author field photographs are withheld.** Their rights position is not documented
+  as settled, so no licence is asserted over them. The reasoning is recorded in
+  `data/public_subset/README.md` and `LICENSE`; if they are added later, the README,
+  LICENSE, CREDITS, SOURCES and CITATION files must be updated together and consistently.
+
+The data licence is **separate from the software licence** — `data/public_subset/LICENSE`
+covers the images only.
+
+`eval/manifest_template.csv` is a format reference containing placeholder rows and no real
+data. `.gitignore` blocks `*.jpg`, `*.png`, `datasets/` and `eval/*_manifest.csv` so that
+corpus images and split listings cannot be committed by accident; `data/public_subset/`
+is the single deliberate exception.
 
 ## Installation
 
@@ -208,9 +241,11 @@ control without loading Stable Diffusion at all.
 ## Tests
 
 ```bash
-python -m compileall -q dataset models training metrics inference utils train.py infer.py scripts
+python -m compileall -q dataset models training metrics inference utils train.py infer.py scripts tools
 python test_paper_params.py --quick     # protocol + defaults, no data or weights needed
 python tools/check_protocol.py          # opt-in defaults are intact
+python tools/test_check_image_metadata.py   # GPS stripping is lossless (synthetic fixture)
+python tools/check_image_metadata.py --dir data/public_subset   # audit the released images
 ```
 
 `test_paper_params.py` covers parameter defaults, model forward shapes, loss and

@@ -1,0 +1,20 @@
+cff-version: 1.2.0
+title: Public image subset - Ancient Chinese mountain-pattern (shan) bronze mirrors
+message: If you use this dataset, please cite the associated article.
+type: dataset
+# This subset currently contains 14 museum open-access images, all CC0 1.0 Universal.
+# Ten author field photographs are withheld pending clarification of their rights
+# position; if they are added, this licence field must be revised to match whatever
+# licence their copyright holder actually grants. See LICENSE and README.md.
+license: CC0-1.0
+authors:
+  - family-names: Guan
+    given-names: Jun
+  - family-names: Jia
+    given-names: Qian
+  - family-names: Zhang
+    given-names: Jianmin
+  - family-names: Li
+    given-names: Yang
+version: 1.0.0
+date-released: 2026-09-21

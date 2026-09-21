@@ -1,0 +1,55 @@
+# Licensing of this image subset
+
+This file covers the 14 images currently shipped in `data/public_subset/`. Every one of
+them originates from a museum open-access programme and is released under **CC0 1.0
+Universal**, which places the work in the public domain and permits reuse without
+attribution.
+
+## 1. `02_museum_Cleveland_CC0/`
+
+The Cleveland Museum of Art. Dedicated to the public domain under **CC0 1.0 Universal**:
+<https://creativecommons.org/publicdomain/zero/1.0/>
+
+## 2. `03_museum_Harvard_no_permission_required/`
+
+Harvard Art Museums. The museum's public API reports an image permission level of zero
+for these objects, denoting that the images are supplied without a permission
+requirement. The objects are of the Warring States period and therefore in the public
+domain. The credit line specified in `CREDITS.md` should be reproduced.
+
+## 3. `04_museum_NMAA_Smithsonian_CC0/`
+
+National Museum of Asian Art, Smithsonian Institution. Released under **CC0** in
+accordance with the museum's Image Services policy:
+<https://asia.si.edu/research/research-resources/image-services-and-permissions/>
+
+## 4. Author field photographs — not currently included
+
+Ten field photographs are **not** part of this release. The source table records them as
+taken by recording-institution staff, with copyright held by the recording institution
+and redistribution permitted only if that institution has granted rights. Because the
+rights position is not documented as settled, no licence is asserted over them here and
+they are withheld from redistribution.
+
+If they are added later, this file must be updated to state their actual rights basis and
+the corresponding licence section, and the statements in `README.md`, `CREDITS.md`,
+`SOURCES.csv` and `CITATION.cff` must be brought into agreement with it. Under no
+circumstances should they be released under a Creative Commons licence unless the
+copyright holder has granted that licence.
+
+## 5. Other material not included
+
+Photographs taken by the authors inside museum galleries, and photographs obtained from
+museum websites or from excavation reports and catalogues, are not included in this
+subset because their rights status is not settled. They are reproduced in the article
+for scholarly citation, comparison and criticism only.
+
+## 6. Scope of this licence
+
+This file licenses the **images only**. It does not apply to the source code in the rest
+of this repository, which is covered by a separate licence (see the repository root).
+
+## 7. No warranty
+
+The images are provided "as is", without warranty of any kind. Users are responsible for
+verifying that their intended reuse complies with the applicable licence.
