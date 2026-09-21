@@ -4,6 +4,11 @@
 > test set, on a single RTX 4060 Laptop (8 GB). These are engineering measurements used
 > to sanity-check the pipeline, **not** the final manuscript table. Do not cite them
 > without multi-seed runs.
+>
+> This repository is unfinished and under maintenance; the known defects and rough edges
+> behind several of these numbers are listed in [`STATUS.md`](STATUS.md) — in particular
+> the non-converging discriminator (§8) and the Stage-2 budget-report string that
+> misdescribes its own architecture.
 
 ---
 

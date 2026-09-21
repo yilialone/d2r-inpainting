@@ -14,8 +14,27 @@ data/
     └── README.md
 ```
 
-The authoritative description — what is included, what is withheld and why, and the
-rights basis for each folder — is [`public_subset/README.md`](public_subset/README.md).
+The authoritative description — what is included, what is not yet included and why, and
+the rights basis for each folder — is [`public_subset/README.md`](public_subset/README.md).
+
+## This set will grow
+
+`data/public_subset/` is a **living collection**, not a frozen release. Only material
+whose rights status is unambiguous is included, and **further images will be added as
+additional permissions are obtained** from the holding institutions and from the
+recording staff.
+
+Consequences for anyone reusing it:
+
+* the file list will change between versions — do not assume it is stable;
+* the `version` field in `public_subset/CITATION.cff` is incremented when it changes;
+* if you need reproducible inputs, pin a commit and record the exact file list you used;
+* no date is promised for any particular addition — the constraint is the rights
+  position, not editorial effort.
+
+Every addition must keep `public_subset/README.md`, `LICENSE`, `CREDITS.md`,
+`SOURCES.csv` and `CITATION.cff` mutually consistent, and must pass the metadata audit
+below. See [`../docs/STATUS.md`](../docs/STATUS.md) §5 for the full policy.
 
 ## What this data is, and is not
 

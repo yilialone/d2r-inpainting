@@ -30,8 +30,12 @@ authors:
   - family-names: Li
     given-names: Yang
 notes: >-
-  Accompanying manuscript: "Two-Stage Structural Reconstruction and Texture
-  Refinement for Digital Restoration of Ancient Chinese Mountain-Pattern Bronze
-  Mirror Photographs", npj Heritage Science, manuscript ID
+  Development status: unfinished research code under best-effort maintenance. Known
+  defects, rough edges and the maintenance policy are listed in docs/STATUS.md; there
+  is no API stability guarantee. All reported measurements are single-seed and are not
+  final manuscript values. Accompanying manuscript: "Two-Stage Structural
+  Reconstruction and Texture Refinement for Digital Restoration of Ancient Chinese
+  Mountain-Pattern Bronze Mirror Photographs", npj Heritage Science, manuscript ID
   a062e16c-271f-4765-88b0-c2ef3985d848. The released image subset is licensed
-  separately under CC0 1.0 Universal and is not covered by the software licence.
+  separately under CC0 1.0 Universal, is not covered by the software licence, and is
+  a living collection that will grow as further image permissions are obtained.

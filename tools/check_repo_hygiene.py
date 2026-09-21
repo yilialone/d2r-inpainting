@@ -35,7 +35,7 @@ REQUIRED = [
     "requirements.txt", ".gitignore", ".gitattributes",
     ".github/workflows/tests.yml",
     "train.py", "infer.py", "evaluate.py", "test_paper_params.py",
-    "docs/PROTOCOL.md", "docs/RESULTS.md", "docs/ARCHITECTURE.md",
+    "docs/PROTOCOL.md", "docs/RESULTS.md", "docs/ARCHITECTURE.md", "docs/STATUS.md",
     "data/README.md", "data/public_subset/README.md",
     "data/public_subset/LICENSE", "data/public_subset/SOURCES.csv",
     "data/public_subset/CREDITS.md", "data/public_subset/CITATION.cff",

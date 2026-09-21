@@ -28,14 +28,24 @@ The repository is **code plus one small, licence-clear image subset**. Model wei
 checkpoints, the study corpus and generated results are deliberately excluded — see
 [Data availability](#data-availability) and [`.gitignore`](.gitignore).
 
-> **Status.** Research code accompanying a manuscript under revision. The numbers in
-> [`docs/RESULTS.md`](docs/RESULTS.md) come from a **single seed (2026)** on one internal
-> 51-pair test set and are reported for engineering comparison only. They are not the
-> final manuscript table, and nothing here should be cited as a published result.
-
-**New here?** Read the [protocol invariants](#why-the-input-protocol-is-the-interesting-part)
-below, then [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) for how the modules fit
-together.
+> ### Status: unfinished, under maintenance
+>
+> This is research code accompanying a manuscript under revision — **not a finished
+> library**. It is still being maintained, and the remaining work is listed openly in
+> [`docs/STATUS.md`](docs/STATUS.md): known defects (including a Stage-2 budget report
+> that describes an architecture the code no longer implements), rough edges, and what
+> "under maintenance" does and does not commit to. There is **no API stability
+> guarantee** and no support commitment.
+>
+> Two further caveats. The numbers in [`docs/RESULTS.md`](docs/RESULTS.md) come from a
+> **single seed (2026)** on one internal 51-pair test set, so nothing here should be
+> cited as a published result. And [`data/public_subset/`](data/public_subset/) is a
+> **living collection**: further images will be added as additional permissions are
+> obtained, so the file set is not frozen.
+>
+> **New here?** Read the [protocol invariants](#why-the-input-protocol-is-the-interesting-part)
+> below, then [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) for how the modules fit
+> together.
 
 ---
 
@@ -90,6 +100,7 @@ See [`docs/PROTOCOL.md`](docs/PROTOCOL.md) for the full specification.
 ├── eval/manifest_template.csv   # evaluation-manifest format example (placeholders only)
 ├── .github/workflows/tests.yml  # CI: hygiene + protocol suite (CPU only)
 └── docs/
+    ├── STATUS.md                # what is unfinished, and the maintenance policy
     ├── ARCHITECTURE.md          # how the modules and stages fit together
     ├── PROTOCOL.md              # input/leakage invariants
     └── RESULTS.md               # measured numbers + exact reproduction commands

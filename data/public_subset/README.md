@@ -31,6 +31,31 @@ provenance of the corpus; it is *not* a runnable evaluation set. `evaluate.py` i
 repository root requires image/mask pairs and cannot be run on this directory. The
 damage masks used in the article are derived annotations and are not redistributed.
 
+## This set will grow
+
+This is a **living collection**, not a frozen release. Only material whose rights status
+is unambiguous is included here, and **further images will be added as additional
+permissions are obtained** from the holding institutions and from the recording staff.
+
+Two practical consequences:
+
+* The file list will change between versions. The `version` field in
+  [`CITATION.cff`](CITATION.cff) is incremented when it does. If you need reproducible
+  inputs, pin a commit and record the exact file list you used rather than tracking
+  `main`.
+* No date is promised for any particular addition. The constraint is the rights
+  position, not editorial effort — an image appears here only once its licence is
+  settled and documented, never before.
+
+Each addition must keep `README.md`, `LICENSE`, `CREDITS.md`, `SOURCES.csv` and
+`CITATION.cff` in this directory mutually consistent, and must pass
+
+```bash
+python tools/check_image_metadata.py --dir data/public_subset
+```
+
+See [`../../docs/STATUS.md`](../../docs/STATUS.md) §5 for the full policy.
+
 ## What is deliberately excluded
 
 ### 1. Author field photographs (not currently included)

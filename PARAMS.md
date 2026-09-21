@@ -133,9 +133,14 @@ Table 4 报告脚本）。缺少可选依赖 `lpips` 时 F 节会跳过推理子
 模型权重或检查点。工作区中原有的约 250 个一次性分析/审计脚本、中间 PNG、日志与 docx
 稿件均未包含。
 
-图像数据仅包含 `data/public_subset/` 下的 14 张博物馆开放获取图像（CC0 1.0，权利链
-清晰、无 GPS 元数据）；语料其余部分、损伤掩膜与 51 对评测划分均不分发。详见
-`data/README.md` 与 `data/public_subset/README.md`。
+**本仓库尚未完成，仍在维护中。** 已知缺陷、粗糙之处、API 稳定性说明与维护承诺见
+`docs/STATUS.md`。其中最需要留意的一条：Stage-2 的 `budget_report.json` 里
+`model_definition` 仍写成 7 通道输入，而实际协议已是 4 通道 —— 该字符串会被
+`scripts/control_budget_report.py` 直接搬进论文 Table 4，**引用前必须核对**。
 
-发布前请补上代码的 `LICENSE`（当前未指定，默认即"保留所有权利"，会阻止他人复用）。
-注意数据许可是独立的：`data/public_subset/LICENSE` 只覆盖图像，不覆盖代码。
+代码许可为 Apache-2.0（见 `LICENSE`），第三方组件与基座权重许可见 `NOTICE`。
+数据许可是独立的：`data/public_subset/LICENSE` 只覆盖图像（CC0 1.0），不覆盖代码。
+
+图像数据仅包含 `data/public_subset/` 下的 14 张博物馆开放获取图像（权利链清晰、无 GPS
+元数据）；语料其余部分、损伤掩膜与 51 对评测划分均不分发。该子集是**持续增补**的集合，
+取得新的授权后会继续添加，详见 `data/README.md`。
