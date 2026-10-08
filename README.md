@@ -8,6 +8,10 @@ Reference implementation for the accompanying manuscript.
 
 > **Status: unfinished, under maintenance.** Known defects and what that commits to:
 > [`docs/STATUS.md`](docs/STATUS.md).
+>
+> **Code release only.** No training logs, loss curves, per-run metric records or
+> checkpoints are distributed; the manuscript is the reference for the method and for any
+> reported result.
 
 ## Install
 

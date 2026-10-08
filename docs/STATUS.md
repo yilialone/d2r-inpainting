@@ -2,9 +2,14 @@
 
 ## 1. What this is
 
-A research prototype released alongside a manuscript under revision. It reproduces the
-experiments described in that manuscript. It is **not** a finished library, and it is
-not maintained to library standards.
+The code release for a research prototype, published alongside a manuscript under
+revision. It contains the implementation of the two-stage restoration method described in
+that manuscript. It is **not** a finished library, and it is not maintained to library
+standards.
+
+**This is a code release only.** No training logs, no loss curves, no per-run metric
+records and no checkpoints are distributed here. The manuscript is the reference for the
+method and for any reported result.
 
 ## 2. Development status: unfinished
 
@@ -23,12 +28,9 @@ judge what they are relying on, not as a promise of when each will be addressed.
   from the instance, so it can no longer drift. **Reports generated before the fix are
   not retroactively corrected — regenerate them, or edit the string by hand, before
   quoting one in a manuscript.**
-* **Training results are not stored in this repository.** This is a code release only:
-  no training logs, no loss curves, no per-run metric records and no checkpoints are
-  distributed here. The repository therefore makes no claim about the outcome of any
-  particular training run, and nothing here can be used to audit the numerical results
-  reported in the manuscript. The manuscript's own statements are authoritative for
-  those numbers.
+* **Training results are not stored in this repository.** This is a code release only, as
+  stated in section 1: no training logs, no loss curves, no per-run metric records and no
+  checkpoints are distributed here.
 * **The loaders and the evaluation split are configuration, not data.** The corpus and
   the article's damage masks are not distributed (see `data/README.md`), so the
   artefacts and masks that produced any published number are not available here. Nothing
