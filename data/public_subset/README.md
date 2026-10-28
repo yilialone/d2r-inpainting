@@ -73,9 +73,9 @@ in this directory must be updated together and consistently.
 
 Photographs supplied by museums that have neither placed them in the public domain nor
 granted a redistribution licence are not included. This applies to the Harvard Art
-Museums images used in the article (1943.52.143, 1943.52.145, 1943.52.147): the museum's
-photographic records carry their own copyright notice and no open licence, and written
-confirmation is being sought before any redistribution.
+Museums objects (1943.52.143, 1943.52.145, 1943.52.147): the museum's photographic records
+carry their own copyright notice and no open licence. No photograph of these objects is
+reproduced in the article, and no image file of them is distributed.
 
 ### 3. Photographs taken by the authors inside museum galleries
 
